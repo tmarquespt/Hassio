@@ -1,0 +1,71 @@
+homeassistant:
+
+climate:
+
+  - platform: broadlink
+    name: ac escritorio
+    host: 192.168.1.76
+    mac: '78:0f:77:1a:39:e0'
+    ircodes_ini: 'broadlink_climate_codes/samsung.ini'
+    min_temp: 10
+    max_temp: 30
+    target_temp: 20
+    temp_sensor: sensor.tempo_temperature
+    default_operation: idle
+    default_fan_mode: mid
+    customize:
+      operations:
+        - idle
+        - cool
+        - heat
+      fan_modes:
+        - low
+        - mid
+        - high
+        - auto 
+
+  - platform: broadlink
+    name: ac sala
+    host: 192.168.1.146
+    mac: '78:0f:77:1a:0e:88'
+    ircodes_ini: 'broadlink_climate_codes/samsung.ini'
+    min_temp: 10
+    max_temp: 30
+    target_temp: 20
+    temp_sensor: sensor.tempo_temperature
+    default_operation: idle
+    default_fan_mode: mid
+    customize:
+      operations:
+        - idle
+        - cool
+        - heat
+      fan_modes:
+        - low
+        - mid
+        - high
+        - auto 
+        
+###############################################################################
+#                                                                             #
+#                           G R O U P                                         #
+#                                                                             #
+###############################################################################       
+      
+group:
+  
+  tab_ac:
+    view: yes
+    name: AC
+    entities:
+      - group.grp_ac
+
+  grp_ac:
+    control: hidden
+    name: Ar condicionado
+    entities:
+      - climate.ac_escritorio
+      - climate.ac_sala
+      
+
+      

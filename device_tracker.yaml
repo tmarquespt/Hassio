@@ -1,0 +1,6 @@
+- platform: mqtt_json
+  devices:
+   tiago: zanzito/tiago/location
+  track_new_devices: True
+  interval_seconds: 10
+  consider_home: 20

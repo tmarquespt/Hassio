@@ -1,0 +1,16 @@
+media_player.tvsala:
+  name:
+  platform: cast
+  unique_id: ec9bdaab-32da-7bf0-c99e-3faf5e7826ea
+sensor.illumination_7811dcb0613c:
+  name: Lux
+  platform: xiaomi_aqara
+  unique_id: illumination7811dcb0613c
+light.gateway_light_7811dcb0613c:
+  name: Aqara GW
+  platform: xiaomi_aqara
+  unique_id: rgb7811dcb0613c
+binary_sensor.door_window_sensor_158d0001c0d04c:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001c0d04c

@@ -1,0 +1,10 @@
+media_player.mediaroom_none:
+  friendly_name: Box Meo
+binary_sensor.door_window_sensor_158d0001c0d04c:
+  friendly_name: Porta Rua
+climate.ac_sala:
+  friendly_name: Sala
+  icon: mdi:television
+climate.ac_escritorio:
+  friendly_name: Quartos
+  icon: mdi:hotel

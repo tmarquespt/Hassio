@@ -1,0 +1,49 @@
+- action:
+  - data:
+      message: A porta foi aberta
+    service: telegram_bot.send_message
+  alias: Abertura Porta
+  condition: []
+  id: '1523915438533'
+  trigger:
+  - entity_id: binary_sensor.door_window_sensor_158d0001c0d04c
+    from: 'off'
+    platform: state
+    to: 'on'
+- alias: Informa tempo cores
+  trigger:
+  - platform: time
+    at: 07:45
+  action:
+  - service: light.turn_on
+    data_template:
+      entity_id: light.gateway_light_7811dcb0613c
+      brightness: 20
+      color_name: "{% if states('sensor.tempo_precipitation') | int >= 0 %}\n  blue\n\
+        {% elif states('sensor.tempo_precipitation') | int >= 20 %}\n  yellow\n{%\
+        \ elif states('sensor.tempo_precipitation') | int >= 50 %}\n  red\n{% endif\
+        \ %}\n"
+- trigger:
+  - entity_id: switch.cozinha_stripe
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - service: notify.telegram
+    data:
+      message: Abrir a Garagem?
+      data:
+        inline_keyboard:
+        - SIM:/home-alex
+        - NÂO:/home-alex
+- id: change_Log_Lv
+  alias: change Log Lv
+  initial_state: 'on'  
+  trigger:
+  - entity_id: input_select.log_level
+    platform: state
+  action:
+  - service: logger.set_level
+    data: {}
+    data_template:
+      homeassistant.components: '{{ trigger.to_state.state }}'

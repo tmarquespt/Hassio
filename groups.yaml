@@ -1,0 +1,75 @@
+grp_octoprint:
+  name: Octoprint
+  entities:
+    - sensor.octoprint_current_state
+    - sensor.octoprint_job_percentage
+    - sensor.octoprint_actual_bed_temp
+    - sensor.octoprint_target_bed_temp
+    - sensor.octoprint_actual_tool0_temp
+    - sensor.octoprint_target_tool0_temp
+    - sensor.octoprint_actual_tool1_temp
+    - sensor.octoprint_target_tool1_temp
+    - camera.m1065lw
+    
+tab_octoprint:
+  name: Octoprint
+  view: yes
+  #icon: mdi:printer-3d
+  entities:
+    - group.grp_octoprint
+    
+grp_tempo:
+  name: Tempo
+  view: no
+  entities:
+    - sensor.tempo_temperature
+    - sensor.tempo_humidity
+    - sensor.tempo_precipitation
+    - sensor.tempo_symbol
+
+grp_sala:
+  name: Sala
+  view: no
+  entities:
+    - switch.artemide
+    - light.gateway_light_7811dcb0613c
+    - sensor.illumination_7811dcb0613c
+    
+grp_entrada:
+  name: Entrada
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d0001c0d04c
+ 
+grp_cozinha:
+  name: Cozinha
+  view: no
+  entities:
+    - switch.cozinha_stripe
+    - switch.cozinha_tecto
+    - switch.cozinha_bancada
+
+grp_escritorio:
+  name: Escritório
+  view: no
+  entities:
+    - switch.power
+    - switch.canal
+    - switch.volume
+    
+
+
+zanzito:
+  name: Localização
+  entities:
+    group.familia
+
+familia:    
+  entities:
+    - sensor.tiago
+    - sensor.tiago_bateria_telemovel
+    - camera.tiago_cam
+    - proximity.tiago_casa
+    - climate.teste
+
+

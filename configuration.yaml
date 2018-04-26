@@ -1,0 +1,209 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Lisbon
+  # Customization file
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  api_password: !secret http_password
+  base_url: !secret my_dns
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Ligação ao GPSLOgger
+
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - key: !secret xiaomi_key
+      mac: !secret xiaomi_mac
+      host: 192.168.1.86
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# Tracked history is kept for 10 days
+recorder:
+  purge_keep_days: 10
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+sensor:
+  - platform: yr
+    name: Tempo
+    forecast: 24
+    monitored_conditions:
+      - temperature
+      - symbol
+      - precipitation
+      - humidity
+  - platform: octoprint
+    name: OctoPrint
+    monitored_conditions:
+      - Current State
+      - Temperatures
+      - Job Percentage
+ 
+mqtt:
+    broker: localhost
+    port: 1883
+    client_id: hassio
+    keepalive: 60
+    username: !secret username_mqtt
+    password: !secret password_mqtt
+    protocol: 3.1.1
+#Artemide
+switch:
+    - platform: mqtt
+      name: "Artemide"
+      command_topic: "cmnd/artemide/power" 
+      state_topic: "stat/artemide/POWER" 
+      qos: 1 
+      payload_on: "ON" 
+      payload_off: "OFF" 
+      retain: true
+    - platform: mqtt
+      name: “Cozinha Stripe”
+      command_topic: "cmnd/sonoffs201/power" 
+      state_topic: "stat/sonoffs201/POWER" 
+      qos: 1 
+      payload_on: "ON" 
+      payload_off: "OFF" 
+      retain: true
+    - platform: mqtt
+      name: “Cozinha Bancada”
+      command_topic: "cmnd/swcozinha1/power1" 
+      state_topic: "stat/swcozinha1/POWER1" 
+      qos: 1 
+      payload_on: "ON" 
+      payload_off: "OFF" 
+      retain: true
+    - platform: mqtt
+      name: “Cozinha Tecto”
+      command_topic: "cmnd/swcozinha1/power2" 
+      state_topic: "stat/swcozinha1/POWER2" 
+      qos: 1 
+      payload_on: "ON" 
+      payload_off: "OFF" 
+      retain: true
+    - platform: broadlink
+      host: 192.168.1.76         
+      mac: '78:0f:77:1a:39:e0'
+      type: rm_mini
+      switches:
+        power:
+          friendly_name: "TV Escritório Power"
+          command_on: 'JgAwAB0dHR07HB8cHhweOTscHjofGzodHQALlx4cHR07HB4cHxsfOTodHjkfGzwcHQANBQAAAAAAAAAA=='
+          command_off: 'JgAwAB0dHR07HB8cHhweOTscHjofGzodHQALlx4cHR07HB4cHxsfOTodHjkfGzwcHQANBQAAAAAAAAAA=='
+        volume:
+          friendly_name: "Volume"
+          command_on: 'JgAwAB0dOh0dHR0dHR4dOjo6Oh0eHR0dHQALlh0dOx0dHR0dHR0dOjs6Oh0dHR0dHgANBQAAAAAAAAAA=='
+          command_off: 'JgAwAB8bHxs8GyAbHxsfODw4PRsfGx84HwALeB8bHxs8Gx8bHxwfODw4Oh0fHB06HwANBQAAAAAAAAAA=='
+        canal:
+          friendly_name: "Canal"
+          command_on: 'JgA0AB8bPBsfGx8cHxsfOB8bPBsgGx8bHxsfAAuUHh08Gx8bHxsfHB84Hxs8Gx8bHxwfGx8ADQUAAAAA=='
+          command_off: 'JgAaAB8cHR07HB0dHxsdOx4cPBseHB8bHjofAA0FAAAAAAAAAAAAAAAAAAA=='
+
+# Chromecast
+media_player:
+  - platform: cast
+  - platform: mediaroom
+    host: 192.168.1.64
+    name: Meo Sala
+
+       
+panel_iframe:
+  router_wifi:
+    title: 'MeoRouter'
+    url: 'http://192.168.1.254'
+    icon: mdi:router-wireless
+  octoprint:
+    title: 'Octoprint'
+    url: 'http://192.168.1.67'
+    icon: mdi:printer-3d
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+notify:
+  - name: telegram
+    platform: telegram
+    chat_id: 572900371
+    
+telegram_bot:
+  - platform: polling
+    api_key: 568943407:AAEKvx7Y1J8S7m9e8SXxS2hZ4yJxQrItLDU
+    allowed_chat_ids:
+      - 572900371
+
+octoprint:
+  host: 192.168.1.67
+  api_key: !secret octoprint_api_key
+  bed: true
+  number_of_tools: 2
+  
+  
+proximity:
+
+  tiago_casa:
+    zone: home
+    devices:
+      - device_tracker.tiago
+    unit_of_measurement: m
+
+
+
+logger:
+  default: error
+#  logs:
+#    pymediaroom: debug
+#    homeassistant.components.media_player.mediaroom: debug
+#    custom_components.media_player.mediaroom: debug
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
